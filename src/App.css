@@ -3,3 +3,23 @@
     padding: 0;
     box-sizing: border-box;
 }
+ul li{
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    /* background-color: grey; */
+}
+ul .nav_tab:hover{
+    background-color: rgb(129, 133, 133,0.7);
+    transition: 0.5s;
+}
+
+ul li .navitem_text{
+    text-decoration: none;
+    font-weight: 500;
+    /* background-color: red; */
+}
+ 
+.navitem_text:hover{
+    color: black;
+}

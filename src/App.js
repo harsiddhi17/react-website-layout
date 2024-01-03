@@ -8,16 +8,20 @@ import Blog from "./components/Blog";
 import NotFound from "./components/NotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
+import Form from "./components/Form";
 
 const App = () => {
+  
   return (
     <>
       <Navbar />
+    {/* <Form/> */}
       <Routes>
-        <Route path="home" element={<Home />} />
+        <Route path="home" element={<Home/>} />
         <Route path="about" element={<About />} />
         <Route path="blog" element={<Blog />} />
-        <Route path="*" element={<NotFound />}></Route>
+        <Route path="form" element={<Form />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer /> 
     </>
