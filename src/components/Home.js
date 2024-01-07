@@ -1,19 +1,21 @@
 import React from "react";
-import "../components/site.css";
-import { useLocation, useNavigate } from "react-router-dom";
-
+import "../components/register.css";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
-
-  const data = useLocation();
-  const navigate = useNavigate();
-  console.log(data);
+  const userName = JSON.parse(localStorage.getItem("users"));
+  // const navigate = useNavigate();
+  // const handleLogout = () => {
+  //   localStorage.removeItem("loggedin");
+  //   navigate("/login");
+  // };
 
   return (
     <>
-      <h6>Home {data.state}</h6>
-      <button onClick={() => {navigate(-1)}}>Go Back</button>
-
-      
+      <h6>Home Page</h6>
+      <div className="username-display">welcome- {userName.name}</div>
+      {/* <button type="submit" onClick={handleLogout} className="btn btn-success">
+        Logout
+      </button> */}
     </>
   );
 };
