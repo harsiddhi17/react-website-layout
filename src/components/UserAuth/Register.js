@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import "./form.css";
+import InputField from "./InputField";
 
-import "../components/register.css";
 const Register = () => {
   const [input, setInput] = useState({
     name: "",
@@ -21,6 +22,7 @@ const Register = () => {
 
   // For validation of email and password field
   const [errors, setErrors] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -34,11 +36,19 @@ const Register = () => {
     return password.length >= 8;
   };
 
+  const isFormFilled =
+    input.name !== "" && input.email !== "" && input.password !== "";
   // For store value in localstorage
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Validate inputs before storing in local storage
+    if (input.name.trim() === "") {
+      setErrors({ ...errors, name: "Please enter a username" });
+      return;
+    } else {
+      setErrors({ ...errors, name: "" });
+    }
     if (!validateEmail(input.email)) {
       setErrors({
         ...errors,
@@ -74,19 +84,25 @@ const Register = () => {
   return (
     <div className="register-form">
       <h2>CREATE AN ACCOUNT</h2>
-      <form onSubmit={handleSubmit}>
-        <input
+      <form onSubmit={handleSubmit} autoComplete="off">
+        <InputField
           name="name"
           value={input.name}
-          onChange={(e) =>
-            setInput({ ...input, [e.target.name]: e.target.value })
-          }
+          onChange={(e) => {
+            setInput({ ...input, [e.target.name]: e.target.value });
+            setErrors({ ...errors, name: "" });
+          }}
           type="text"
           placeholder="Username"
           className="input_style"
         />
+        {errors.name && (
+          <span className="error" style={{ color: "red" }}>
+            {errors.name}
+          </span>
+        )}
 
-        <input
+        <InputField
           name="email"
           value={input.email}
           onChange={(e) => {
@@ -104,7 +120,7 @@ const Register = () => {
           </span>
         )}
 
-        <input
+        <InputField
           name="password"
           value={input.password}
           onChange={(e) => {
@@ -121,12 +137,16 @@ const Register = () => {
           </span>
         )}
 
-        <button type="submit" className="btn_style">
+        <button
+          type="submit"
+          className="btn btn_style"
+          disabled={!isFormFilled}
+        >
           Register
         </button>
       </form>
 
-      <p>
+      <p className="form_link_style">
         Already have an account? <Link to="/login">Login here</Link>
       </p>
     </div>

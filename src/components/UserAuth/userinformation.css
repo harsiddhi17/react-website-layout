@@ -1,0 +1,93 @@
+/* UserInformation.css */
+
+.user-information {
+  position: relative;
+  display: inline-block;
+}
+
+.user-icon {
+  font-size: 2.5em;
+  color: #634ac7;
+  cursor: pointer;
+}
+
+.profile-card {
+  position: absolute;
+  top: 40px;
+  /* top: calc(100% + 10);  */
+  right: 100px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  width: 220px;
+  border-radius: 5px;
+}
+
+.triangle {
+  position: absolute;
+  top: -10px;
+  right: 25px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #ccc;
+}
+
+.profile-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.user-details {
+  margin-top: 15px;
+}
+
+.user-details p {
+  margin-bottom: 10px;
+}
+
+.user-details strong {
+  font-weight: bold;
+}
+
+@media screen and (max-width:1200px) {
+  .user-icon {
+    font-size: 2em;
+
+  }
+
+  .profile-card {
+    top: 70px;
+    right: -12px;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .profile-card {
+    top: 60px;
+    right: -10px;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .user-icon {
+    font-size: 1.5em;
+
+  }
+
+  .profile-card {
+    top: 60px;
+    right: -15px;
+  }
+}
+
+
+@media screen and (max-width:520px) {
+  .user-icon {
+    font-size: 1.5em;
+
+  }
+}

@@ -1,6 +1,7 @@
 import React from "react";
-import "../components/register.css";
-import { useNavigate } from "react-router-dom";
+import "../UserAuth/form.css";
+
+
 const Home = () => {
   const userName = JSON.parse(localStorage.getItem("users"));
   // const navigate = useNavigate();

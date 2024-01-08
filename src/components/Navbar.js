@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { NavLink, useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
 import "../components/navbar.css";
+import { NavLink, useNavigate } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import UserInformation from "./UserAuth/UserInformation";
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -12,7 +12,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("loggedin");
-    navigate("/login");
+    // navigate("/login");
+    navigate("/");
   };
   return (
     <>
@@ -28,21 +29,43 @@ const Navbar = () => {
         <div className={showMenu ? "menu-link mobile-menu-link" : "menu-link"}>
           <ul>
             <li>
-              <NavLink to="home" style={({ isActive }) => ({color: isActive ? "#f2a708" : "#000",})}> home</NavLink>
+              <NavLink
+                to="home"
+                style={({ isActive }) => ({
+                  color: isActive ? "#f2a708" : "#000",
+                })}
+              >
+                home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="about" style={({ isActive }) => ({color: isActive ? "#f2a708" : "#000",})}> about</NavLink>
+              <NavLink
+                to="about"
+                style={({ isActive }) => ({
+                  color: isActive ? "#f2a708" : "#000",
+                })}
+              >
+                about
+              </NavLink>
             </li>
             <li>
-              <NavLink to="blog" style={({ isActive }) => ({color: isActive ? "#f2a708" : "#000",})}> blog</NavLink>
+              <NavLink
+                to="blog"
+                style={({ isActive }) => ({
+                  color: isActive ? "#f2a708" : "#000",
+                })}
+              >
+                blog
+              </NavLink>
             </li>
           </ul>
         </div>
 
-        {/* gnup and signin start */}
+        {/* signup and signin start */}
         <div className="account-buttons">
           <ul className="account-buttons-desktop">
-            {/* Conditionally render based on authentication status */}
+            {isLoggedIn && <UserInformation handleLogout={handleLogout} />}
+
             {!isLoggedIn && (
               <>
                 <li>
@@ -53,12 +76,8 @@ const Navbar = () => {
                 </li>
               </>
             )}
-            {isLoggedIn && (
+            {/* {isLoggedIn && (
               <>
-                <li>
-                  <FaUserCircle className="user-icon" />{" "}
-                  {/* Render user icon */}
-                </li>
                 <li>
                   <button
                     type="submit"
@@ -69,10 +88,22 @@ const Navbar = () => {
                   </button>
                 </li>
               </>
-            )}
+            )} */}
           </ul>
           {/* hamburger menu start */}
+
           <div className="hamburger-menu">
+            {/* Show user icon next to hamburger on small screens */}
+            <div className="user-icon-mobile">
+              {isLoggedIn && <UserInformation handleLogout={handleLogout} />}
+              {!isLoggedIn && (
+                <>
+                  <li>
+                    <NavLink to="login">Sign In</NavLink>
+                  </li>
+                </>
+              )}
+            </div>
             <NavLink to="#" onClick={() => setShowMenu(!showMenu)}>
               <GiHamburgerMenu />
             </NavLink>
