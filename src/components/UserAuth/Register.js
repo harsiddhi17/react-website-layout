@@ -2,14 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./form.css";
 import InputField from "./InputField";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
+
+  // For validation of email and password field
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   //For prevent authenticated from accessing login and register page using url
   const isLoggedIn = JSON.parse(localStorage.getItem("loggedin"));
@@ -20,13 +28,6 @@ const Register = () => {
     }
   }, [isLoggedIn, navigate]);
 
-  // For validation of email and password field
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
   const validateEmail = (email) => {
     const regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regEx.test(String(email).toLowerCase());
@@ -36,9 +37,48 @@ const Register = () => {
     return password.length >= 8;
   };
 
-  const isFormFilled =
-    input.name !== "" && input.email !== "" && input.password !== "";
+  // Validation for individual fields on focus and blur
+  const handleFocus = (field) => {
+    setErrors({ ...errors, [field]: "" });
+  };
+
+  const handleBlur = (field) => {
+    switch (field) {
+      case "name":
+        if (input.name.trim() === "") {
+          setErrors({ ...errors, name: "Name is Required" });
+        }
+        break;
+      case "email":
+        if (!validateEmail(input.email)) {
+          setErrors({
+            ...errors,
+            email: "Email is required",
+          });
+        }
+        break;
+      case "password":
+        if (!validatePassword(input.password)) {
+          setErrors({
+            ...errors,
+            password: "Password is required",
+          });
+        }
+        break;
+      default:
+        break;
+    }
+  };
+  // const isFormFilled =
+  //   input.name !== "" && input.email !== "" && input.password !== "";
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+    setErrors({ ...errors, [name]: "" });
+  };
   // For store value in localstorage
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -52,7 +92,7 @@ const Register = () => {
     if (!validateEmail(input.email)) {
       setErrors({
         ...errors,
-        email: "Email should contain '@' and non-whitespace characters'",
+        email: "Please enter valid email",
       });
       return;
     } else {
@@ -88,16 +128,16 @@ const Register = () => {
         <InputField
           name="name"
           value={input.name}
-          onChange={(e) => {
-            setInput({ ...input, [e.target.name]: e.target.value });
-            setErrors({ ...errors, name: "" });
-          }}
+          onChange={handleInputChange}
+          onFocus={() => handleFocus("name")}
+          onBlur={() => handleBlur("name")}
           type="text"
-          placeholder="Username"
+          placeholder="Enter Username"
           className="input_style"
         />
         {errors.name && (
-          <span className="error" style={{ color: "red" }}>
+          <span className="error-style">
+            <IoIosInformationCircleOutline className="validation-icon" />
             {errors.name}
           </span>
         )}
@@ -105,17 +145,17 @@ const Register = () => {
         <InputField
           name="email"
           value={input.email}
-          onChange={(e) => {
-            setInput({ ...input, [e.target.name]: e.target.value });
-            setErrors({ ...errors, email: "" });
-          }}
+          onChange={handleInputChange}
+          onFocus={() => handleFocus("email")}
+          onBlur={() => handleBlur("email")}
           type="email"
-          placeholder="Email"
+          placeholder="Enter Email"
           className="input_style"
         />
 
         {errors.email && (
-          <span className="error" style={{ color: "red" }}>
+          <span className="error-style">
+            <IoIosInformationCircleOutline className="validation-icon" />
             {errors.email}
           </span>
         )}
@@ -123,25 +163,21 @@ const Register = () => {
         <InputField
           name="password"
           value={input.password}
-          onChange={(e) => {
-            setInput({ ...input, [e.target.name]: e.target.value });
-            setErrors({ ...errors, password: "" });
-          }}
+          onChange={handleInputChange}
+          onFocus={() => handleFocus("password")}
+          onBlur={() => handleBlur("password")}
           type="password"
-          placeholder="Password"
+          placeholder="Enter Password"
           className="input_style"
         />
         {errors.password && (
-          <span className="error" style={{ color: "red" }}>
+          <span className="error-style">
+            <IoIosInformationCircleOutline className="validation-icon" />
             {errors.password}
           </span>
         )}
 
-        <button
-          type="submit"
-          className="btn btn_style"
-          disabled={!isFormFilled}
-        >
+        <button type="submit" className="btn btn_style">
           Register
         </button>
       </form>

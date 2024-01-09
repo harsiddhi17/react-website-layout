@@ -9,6 +9,8 @@ const InputField = ({
   type,
   placeholder,
   className,
+  onFocus,
+  onBlur,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const tooglePasswordVisibility = () => {
@@ -25,6 +27,8 @@ const InputField = ({
           type={showPassword ? "text" : type}
           placeholder={placeholder}
           className={className}
+          onBlur={onBlur}
+          onFocus={onFocus}
         />
         {type === "password" && (
           <button
@@ -32,7 +36,7 @@ const InputField = ({
             onClick={tooglePasswordVisibility}
             className="password-toggle-btn"
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
         )}
       </div>
